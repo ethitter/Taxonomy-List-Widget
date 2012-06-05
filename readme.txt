@@ -5,6 +5,8 @@ Tags: tag, tags, taxonomy, sidebar, widget, widgets, list
 Requires at least: 2.8
 Tested up to: 3.4
 Stable tag: 1.1.2
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Creates a list (bulleted, number, or custom) of non-hierarchical taxonomies as an alternative to the term (tag) cloud. Formerly known as Tag List Widget.
 
