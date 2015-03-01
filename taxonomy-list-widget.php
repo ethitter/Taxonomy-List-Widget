@@ -42,7 +42,8 @@ class taxonomy_list_widget_plugin {
 		'incexc_ids' => array(),
 		'hide_empty' => true,
 		'post_counts' => false,
-		'rel' => 'nofollow'
+		'rel' => 'nofollow',
+		'custom_class' => ''
 	);
 
 	/*
@@ -135,6 +136,9 @@ class taxonomy_list_widget_plugin {
 
 		if( !empty( $incexc_ids ) )
 			$options[ $incexc ] = $incexc_ids;
+		
+		if( !empty( $custom_class ) )
+			$options[ 'custom_class' ] = $custom_class;
 
 		$options = apply_filters( 'taxonomy_list_widget_options', $options, $id );
 
@@ -151,7 +155,7 @@ class taxonomy_list_widget_plugin {
 				$css_id = '';
 
 			//Delimiters
-			$before_list = '<div class="tlw-list"' . $css_id . '>';
+			$before_list = '<div class="tlw-list' . $custom_class . '"' . $css_id . '>';
 			$after_list = '</div><!-- .tlw-list -->';
 			$before_item = '';
 			$after_item = ' ';
@@ -161,7 +165,7 @@ class taxonomy_list_widget_plugin {
 			else {
 				switch( $delimiter ) {
 					case 'ol':
-						$before_list = '<ol class="tlw-list"' . $css_id . '>';
+						$before_list = '<ol class="tlw-list' . $custom_class . '"' . $css_id . '>';
 						$after_list = '</ol><!-- .tlw-list -->';
 						$before_item = '<li>';
 						$after_item = '</li>';
@@ -173,7 +177,7 @@ class taxonomy_list_widget_plugin {
 
 					case 'ul':
 					default:
-						$before_list = '<ul class="tlw-list"' . $css_id . '>';
+						$before_list = '<ul class="tlw-list' . $custom_class . '"' . $css_id . '>';
 						$after_list = '</ul><!-- .tlw-list -->';
 						$before_item = '<li>';
 						$after_item = '</li>';
@@ -253,6 +257,24 @@ class taxonomy_list_widget_plugin {
 
 						if( !empty( $value ) || $key == 'title' )
 							$options_sanitized[ $key ] = $value;
+					break;
+
+					case 'custom_class':
+						$options_sanitized[ $key ] = '';
+
+						if( is_string( $value ) )
+							$value = explode( ' ', $value );
+
+						if( is_array( $value ) ) {
+							foreach( $value as $term_id ) {
+								$term_id = sanitize_html_class( $term_id );
+
+								if( !empty( $term_id ) )
+									$options_sanitized[ $key ] .= ' ' . $term_id;
+
+								unset( $term_id );
+							}
+						}
 					break;
 
 					case 'max_name_length':
@@ -478,6 +500,12 @@ class taxonomy_list_widget extends WP_Widget {
 		<p>
 			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label><br />
 			<input type="text" name="<?php echo $this->get_field_name( 'title' ); ?>" class="widefat code" id="<?php echo $this->get_field_id( 'title' ); ?>" value="<?php echo esc_attr( $title ); ?>" />
+		</p>
+		
+		<p>
+			<label for="<?php echo $this->get_field_id( 'custom_class' ); ?>"><?php _e( 'Add custom classes:' ); ?></label><br />
+			<input type="text" name="<?php echo $this->get_field_name( 'custom_class' ); ?>" class="widefat code" id="<?php echo $this->get_field_id( 'custom_class' ); ?>" value="<?php echo esc_attr( $custom_class ); ?>" /><br />
+			<span class="description"><?php _e( '<small>Enter whitespace-separated list of classes.</small>' ); ?></span>
 		</p>
 
 		<h3><?php _e( 'List Style' ); ?></h3>
