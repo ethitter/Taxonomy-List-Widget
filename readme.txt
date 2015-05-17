@@ -1,6 +1,6 @@
 === Taxonomy List Widget ===
 Contributors: ethitter
-Donate link: http://www.ethitter.com/plugins/taxonomy-list-widget/
+Donate link: https://ethitter.com/donate/
 Tags: tag, tags, taxonomy, sidebar, widget, widgets, list
 Requires at least: 2.8
 Tested up to: 4.2
