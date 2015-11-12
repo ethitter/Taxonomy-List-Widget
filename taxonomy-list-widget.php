@@ -257,10 +257,11 @@ class taxonomy_list_widget_plugin {
 				//Open item
 				$output .= $before_item;
 				$url = esc_url( get_term_link( (int)$term->term_id, $taxonomy ) );
-				$output .= '<a '.
+				$active = (strpos($current_url, rtrim($url, '/'))===0);
+				$output .= '<a ' .
 					'href="' . $url . '"' . 
 					apply_filters( 'taxonomy_list_widget_link_rel', ( $rel == 'dofollow' ? ' rel="dofollow"' : ' rel="nofollow"' ), $id ) . 
-					is_page($url)? ' class="active"':'' .
+					($active? ' class="active"':'') .
 					'>';
 
 				//Tag name
