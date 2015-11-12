@@ -245,7 +245,7 @@ class taxonomy_list_widget_plugin {
 			$output = $before_list;
 
 			// filter to provide a list prefix (e.g., an "All Tags" link)
-			$output .= apply_filters( 'taxonomy_list_widget_list_prefix', $output, $taxonomy, $id );
+			$output = apply_filters( 'taxonomy_list_widget_list_prefix', $output, $taxonomy, $id );
 
 			//Populate dropdown
 			$i = 1;
@@ -275,7 +275,7 @@ class taxonomy_list_widget_plugin {
 			}
 
 			// filter to provide a list suffix (e.g., an "All Tags" link)
-			$output .= apply_filters( 'taxonomy_list_widget_list_suffix', $output, $taxonomy, $id );
+			$output = apply_filters( 'taxonomy_list_widget_list_suffix', $output, $taxonomy, $id );
 
 			//End list
 			$output .= $after_list;
