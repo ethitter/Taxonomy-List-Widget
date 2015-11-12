@@ -176,6 +176,10 @@ class taxonomy_list_widget_plugin {
 		$options = wp_parse_args( $options, $this->option_defaults );
 		extract( $options );
 
+		// get the current URL
+		global $wp;
+		$current_url = add_query_arg( $wp->query_string, '', home_url( $wp->request ) );
+
 		//ID
 		if( is_numeric( $id ) )
 			$id = intval( $id );
@@ -252,7 +256,12 @@ class taxonomy_list_widget_plugin {
 
 				//Open item
 				$output .= $before_item;
-				$output .= '<a href="' . esc_url( get_term_link( (int)$term->term_id, $taxonomy ) ) . '"' . apply_filters( 'taxonomy_list_widget_link_rel', ( $rel == 'dofollow' ? ' rel="dofollow"' : ' rel="nofollow"' ), $id ) . '>';
+				$url = esc_url( get_term_link( (int)$term->term_id, $taxonomy ) );
+				$output .= '<a '.
+					'href="' . $url . '"' . 
+					apply_filters( 'taxonomy_list_widget_link_rel', ( $rel == 'dofollow' ? ' rel="dofollow"' : ' rel="nofollow"' ), $id ) . 
+					is_page($url)? ' class="active"':'' .
+					'>';
 
 				//Tag name
 				$name = esc_attr( $term->name );
