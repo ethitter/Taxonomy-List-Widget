@@ -392,7 +392,6 @@ class taxonomy_list_widget_plugin {
 					break;
 
 					default:
-						continue;
 					break;
 				}
 			}
