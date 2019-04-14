@@ -1,0 +1,181 @@
+# Copyright (C) 2019 
+# This file is distributed under the same license as the  package.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/tag-list-widget\n"
+"POT-Creation-Date: 2019-04-14 02:46:43+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2019-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"X-Generator: grunt-wp-i18n 0.5.4\n"
+"X-Poedit-KeywordsList: "
+"__;_e;_x:1,2c;_ex:1,2c;_n:1,2;_nx:1,2,4c;_n_noop:1,2;_nx_noop:1,2,3c;esc_"
+"attr__;esc_html__;esc_attr_e;esc_html_e;esc_attr_x:1,2c;esc_html_x:1,2c;\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Country: United States\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-Bookmarks: \n"
+"X-Textdomain-Support: yes\n"
+
+#: taxonomy-list-widget.php:526
+msgid "Basic Settings"
+msgstr ""
+
+#: taxonomy-list-widget.php:529
+msgid "Taxonomy"
+msgstr ""
+
+#: taxonomy-list-widget.php:538
+msgid "Title:"
+msgstr ""
+
+#: taxonomy-list-widget.php:542
+msgid "List Style"
+msgstr ""
+
+#: taxonomy-list-widget.php:545
+msgid "Bulleted list"
+msgstr ""
+
+#: taxonomy-list-widget.php:546
+msgid "Numbered list"
+msgstr ""
+
+#: taxonomy-list-widget.php:547
+msgid "Line break"
+msgstr ""
+
+#: taxonomy-list-widget.php:548
+msgid "Custom, as specified below"
+msgstr ""
+
+#: taxonomy-list-widget.php:551
+msgid "Custom list style"
+msgstr ""
+
+#: taxonomy-list-widget.php:573
+msgid "Order"
+msgstr ""
+
+#: taxonomy-list-widget.php:576
+msgid "Order terms by:"
+msgstr ""
+
+#: taxonomy-list-widget.php:579
+msgid "Name"
+msgstr ""
+
+#: taxonomy-list-widget.php:582
+msgid "Post count"
+msgstr ""
+
+#: taxonomy-list-widget.php:586
+msgid "Order terms:"
+msgstr ""
+
+#: taxonomy-list-widget.php:589
+msgid "Ascending"
+msgstr ""
+
+#: taxonomy-list-widget.php:592
+msgid "Descending"
+msgstr ""
+
+#: taxonomy-list-widget.php:595
+msgid "Term Display"
+msgstr ""
+
+#: taxonomy-list-widget.php:598
+msgid "Limit number of terms shown to:"
+msgstr ""
+
+#: taxonomy-list-widget.php:600
+msgid "<small>Enter <strong>0</strong> for no limit."
+msgstr ""
+
+#: taxonomy-list-widget.php:604
+msgid "Trim long term names to <em>x</em> characters:</label>"
+msgstr ""
+
+#: taxonomy-list-widget.php:606
+msgid "<small>Enter <strong>0</strong> to show full tag names."
+msgstr ""
+
+#: taxonomy-list-widget.php:610
+msgid "Indicator that term names are trimmed:"
+msgstr ""
+
+#: taxonomy-list-widget.php:612
+msgid "<small>Leave blank to use an elipsis (&hellip;).</small>"
+msgstr ""
+
+#: taxonomy-list-widget.php:617
+msgid "Include terms that aren't assigned to any objects (empty terms)."
+msgstr ""
+
+#: taxonomy-list-widget.php:622
+msgid "Display object (post) counts after term names."
+msgstr ""
+
+#: taxonomy-list-widget.php:625
+msgid "Include/Exclude Terms"
+msgstr ""
+
+#: taxonomy-list-widget.php:628
+msgid "Include/exclude terms:"
+msgstr ""
+
+#: taxonomy-list-widget.php:631
+msgid "Include only the term IDs listed below"
+msgstr ""
+
+#: taxonomy-list-widget.php:634
+msgid "Exclude the term IDs listed below"
+msgstr ""
+
+#: taxonomy-list-widget.php:638
+msgid "Term IDs to include/exclude based on above setting:"
+msgstr ""
+
+#: taxonomy-list-widget.php:640
+msgid "<small>Enter comma-separated list of term IDs.</small>"
+msgstr ""
+
+#: taxonomy-list-widget.php:643
+msgid "Advanced"
+msgstr ""
+
+#: taxonomy-list-widget.php:646
+msgid "Show terms assigned to at least this many posts:"
+msgstr ""
+
+#: taxonomy-list-widget.php:648
+msgid ""
+"<small>Set to <strong>0</strong> to display all terms matching the above "
+"criteria.</small>"
+msgstr ""
+
+#: taxonomy-list-widget.php:652
+msgid "Link relationship:"
+msgstr ""
+
+#: taxonomy-list-widget.php:655
+msgid "nofollow"
+msgstr ""
+
+#: taxonomy-list-widget.php:658
+msgid "dofollow"
+msgstr ""
+
+#: taxonomy-list-widget.php:660
+msgid ""
+"The above setting determines whether or not search engines visit linked "
+"pages from links in this widget's list."
+msgstr ""
