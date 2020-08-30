@@ -1,4 +1,5 @@
 <?php
+// phpcs:ignoreFile -- legacy code in need of refactoring.
 /*
 Plugin Name: Taxonomy List Widget
 Plugin URI: https://ethitter.com/plugins/taxonomy-list-widget/

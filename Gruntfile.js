@@ -32,8 +32,8 @@ module.exports = function( grunt ) {
 				options: {
 					domainPath: '/languages',
 					exclude: [ '\.git/*', 'bin/*', 'node_modules/*', 'tests/*' ],
-					mainFile: 'tag-list-widget.php',
-					potFilename: 'tag-list-widget.pot',
+					mainFile: 'taxonomy-list-widget.php',
+					potFilename: 'taxonomy-list-widget.pot',
 					potHeaders: {
 						poedit: true,
 						'x-poedit-keywordslist': true
