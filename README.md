@@ -1,9 +1,9 @@
 # Taxonomy List Widget #
-**Contributors:** ethitter  
+**Contributors:** [ethitter](https://profiles.wordpress.org/ethitter/)  
 **Donate link:** https://ethitter.com/donate/  
 **Tags:** tag, tags, taxonomy, sidebar, widget, widgets, list  
 **Requires at least:** 2.8  
-**Tested up to:** 5.9  
+**Tested up to:** 6.0  
 **Stable tag:** 1.3.1  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
