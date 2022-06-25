@@ -1,26 +1,28 @@
 <?php
 // phpcs:ignoreFile -- legacy code in need of refactoring.
-/*
-Plugin Name: Taxonomy List Widget
-Plugin URI: https://ethitter.com/plugins/taxonomy-list-widget/
-Description: Creates a list of non-hierarchical taxonomies as an alternative to the term (tag) cloud. Widget provides numerous options to tailor the output to fit your site. List function can also be called directly for use outside of the widget. Formerly known as <strong><em>Tag List Widget</em></strong>.
-Author: Erick Hitter
-Version: 1.3.1
-Author URI: https://ethitter.com/
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+/**
+ * Plugin Name: Taxonomy List Widget
+ * Plugin URI: https://ethitter.com/plugins/taxonomy-list-widget/
+ * Description: Creates a list of non-hierarchical taxonomies as an alternative to the term (tag) cloud. Widget provides numerous options to tailor the output to fit your site. List function can also be called directly for use outside of the widget. Formerly known as <strong><em>Tag List Widget</em></strong>.
+ * Author: Erick Hitter
+ * Version: 1.3.2
+ * Author URI: https://ethitter.com/
+ * Text Domain: tag-list-widget
+ * Domain Path: /languages/
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 /**
@@ -52,12 +54,26 @@ class taxonomy_list_widget_plugin {
 	 * @return null
 	 */
 	function __construct() {
+		add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
 		add_action( 'widgets_init', array( $this, 'action_widgets_init' ) );
 
 		register_activation_hook( __FILE__, array( $this, 'activation_hook' ) );
 		register_deactivation_hook( __FILE__, array( $this, 'deactivation_hook' ) );
 
 		add_action( 'split_shared_term', array( $this, 'action_split_shared_term' ), 10, 4 );
+	}
+
+	/**
+	 * Load plugin translations.
+	 *
+	 * @return void
+	 */
+	public function load_textdomain() {
+		load_plugin_textdomain(
+			'tag-list-widget',
+			false,
+			dirname( plugin_basename( __FILE__ ) ) . '/languages/'
+		);
 	}
 
 	/*
@@ -524,10 +540,10 @@ class taxonomy_list_widget extends WP_Widget {
 			unset( $taxonomies[ 'post_format' ] );
 
 	?>
-		<h3><?php _e( 'Basic Settings', 'taxonomy_list_widget' ); ?></h3>
+		<h3><?php _e( 'Basic Settings', 'tag-list-widget' ); ?></h3>
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'taxonomy' ); ?>"><?php _e( 'Taxonomy', 'taxonomy_list_widget' ); ?>:</label><br />
+			<label for="<?php echo $this->get_field_id( 'taxonomy' ); ?>"><?php _e( 'Taxonomy', 'tag-list-widget' ); ?>:</label><br />
 			<select name="<?php echo $this->get_field_name( 'taxonomy' ); ?>" id="<?php echo $this->get_field_id( 'taxonomy' ); ?>">
 				<?php foreach( $taxonomies as $tax ): ?>
 					<option value="<?php echo esc_attr( $tax->name ); ?>"<?php selected( $tax->name, $taxonomy, true ); ?>><?php echo $tax->labels->name; ?></option>
@@ -536,20 +552,20 @@ class taxonomy_list_widget extends WP_Widget {
 		</p>
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'taxonomy_list_widget' ); ?></label><br />
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'tag-list-widget' ); ?></label><br />
 			<input type="text" name="<?php echo $this->get_field_name( 'title' ); ?>" class="widefat code" id="<?php echo $this->get_field_id( 'title' ); ?>" value="<?php echo esc_attr( $title ); ?>" />
 		</p>
 
-		<h3><?php _e( 'List Style', 'taxonomy_list_widget' ); ?></h3>
+		<h3><?php _e( 'List Style', 'tag-list-widget' ); ?></h3>
 
 		<p>
-			<input type="radio" name="<?php echo $this->get_field_name( 'delimiter' ); ?>" id="<?php echo $this->get_field_id( 'delimiter-ul' ); ?>" value="ul"<?php checked( 'ul', $delimiter, true ); ?>> <label for="<?php echo $this->get_field_id( 'delimiter-ul' ); ?>"><?php _e( 'Bulleted list', 'taxonomy_list_widget' ); ?></label><br />
-			<input type="radio" name="<?php echo $this->get_field_name( 'delimiter' ); ?>" id="<?php echo $this->get_field_id( 'delimiter-ol' ); ?>" value="ol"<?php checked( 'ol', $delimiter, true ); ?>> <label for="<?php echo $this->get_field_id( 'delimiter-ol' ); ?>"><?php _e( 'Numbered list', 'taxonomy_list_widget' ); ?></label><br />
-			<input type="radio" name="<?php echo $this->get_field_name( 'delimiter' ); ?>" id="<?php echo $this->get_field_id( 'delimiter-nl' ); ?>" value="nl"<?php checked( 'nl', $delimiter, true ); ?>> <label for="<?php echo $this->get_field_id( 'delimiter-nl' ); ?>"><?php _e( 'Line break', 'taxonomy_list_widget' ); ?></label><br />
-			<input type="radio" name="<?php echo $this->get_field_name( 'delimiter' ); ?>" id="<?php echo $this->get_field_id( 'delimiter-custom' ); ?>" value="custom"<?php checked( 'custom', $delimiter, true ); ?>> <label for="<?php echo $this->get_field_id( 'delimiter-custom' ); ?>"><?php _e( 'Custom, as specified below', 'taxonomy_list_widget' ); ?></label><br />
+			<input type="radio" name="<?php echo $this->get_field_name( 'delimiter' ); ?>" id="<?php echo $this->get_field_id( 'delimiter-ul' ); ?>" value="ul"<?php checked( 'ul', $delimiter, true ); ?>> <label for="<?php echo $this->get_field_id( 'delimiter-ul' ); ?>"><?php _e( 'Bulleted list', 'tag-list-widget' ); ?></label><br />
+			<input type="radio" name="<?php echo $this->get_field_name( 'delimiter' ); ?>" id="<?php echo $this->get_field_id( 'delimiter-ol' ); ?>" value="ol"<?php checked( 'ol', $delimiter, true ); ?>> <label for="<?php echo $this->get_field_id( 'delimiter-ol' ); ?>"><?php _e( 'Numbered list', 'tag-list-widget' ); ?></label><br />
+			<input type="radio" name="<?php echo $this->get_field_name( 'delimiter' ); ?>" id="<?php echo $this->get_field_id( 'delimiter-nl' ); ?>" value="nl"<?php checked( 'nl', $delimiter, true ); ?>> <label for="<?php echo $this->get_field_id( 'delimiter-nl' ); ?>"><?php _e( 'Line break', 'tag-list-widget' ); ?></label><br />
+			<input type="radio" name="<?php echo $this->get_field_name( 'delimiter' ); ?>" id="<?php echo $this->get_field_id( 'delimiter-custom' ); ?>" value="custom"<?php checked( 'custom', $delimiter, true ); ?>> <label for="<?php echo $this->get_field_id( 'delimiter-custom' ); ?>"><?php _e( 'Custom, as specified below', 'tag-list-widget' ); ?></label><br />
 		</p>
 
-		<label><strong><?php _e( 'Custom list style', 'taxonomy_list_widget' ); ?></strong></label>
+		<label><strong><?php _e( 'Custom list style', 'tag-list-widget' ); ?></strong></label>
 
 		<ul>
 			<?php
@@ -563,7 +579,7 @@ class taxonomy_list_widget extends WP_Widget {
 				foreach( $delims as $key => $name ):
 				?>
 					<li>
-						<label for="<?php echo $this->get_field_id( 'delimiter_custom' ); ?>_<?php echo $key; ?>"><?php _e( $name, 'taxonomy_list_widget' ); ?></label>
+						<label for="<?php echo $this->get_field_id( 'delimiter_custom' ); ?>_<?php echo $key; ?>"><?php _e( $name, 'tag-list-widget' ); ?></label>
 						<input type="text" name="<?php echo $this->get_field_name( 'delimiter_custom' ); ?>[<?php echo $key; ?>]" id="<?php echo $this->get_field_id( 'delimiter_custom' ); ?>_<?php echo $key; ?>" class="small-text code" value="<?php if( isset( $custom_delims ) && array_key_exists( $key, $custom_delims ) ) echo esc_attr( $custom_delims[ $key ] ); ?>" />
 					</li>
 				<?php
@@ -571,94 +587,94 @@ class taxonomy_list_widget extends WP_Widget {
 			?>
 		</ul>
 
-		<h3><?php _e( 'Order', 'taxonomy_list_widget' ); ?></h3>
+		<h3><?php _e( 'Order', 'tag-list-widget' ); ?></h3>
 
 		<p>
-			<label><?php _e( 'Order terms by:', 'taxonomy_list_widget' ); ?></label><br />
+			<label><?php _e( 'Order terms by:', 'tag-list-widget' ); ?></label><br />
 
 			<input type="radio" name="<?php echo $this->get_field_name( 'orderby' ); ?>" value="name" id="<?php echo $this->get_field_name( 'order_name' ); ?>"<?php checked( $orderby, 'name', true ); ?> />
-			<label for="<?php echo $this->get_field_name( 'order_name' ); ?>"><?php _e( 'Name', 'taxonomy_list_widget' ); ?></label><br />
+			<label for="<?php echo $this->get_field_name( 'order_name' ); ?>"><?php _e( 'Name', 'tag-list-widget' ); ?></label><br />
 
 			<input type="radio" name="<?php echo $this->get_field_name( 'orderby' ); ?>" value="count" id="<?php echo $this->get_field_name( 'order_count' ); ?>"<?php checked( $orderby, 'count', true ); ?> />
-			<label for="<?php echo $this->get_field_name( 'order_count' ); ?>"><?php _e( 'Post count', 'taxonomy_list_widget' ); ?></label>
+			<label for="<?php echo $this->get_field_name( 'order_count' ); ?>"><?php _e( 'Post count', 'tag-list-widget' ); ?></label>
 		</p>
 
 		<p>
-			<label><?php _e( 'Order terms:', 'taxonomy_list_widget' ); ?></label><br />
+			<label><?php _e( 'Order terms:', 'tag-list-widget' ); ?></label><br />
 
 			<input type="radio" name="<?php echo $this->get_field_name( 'order' ); ?>" value="ASC" id="<?php echo $this->get_field_name( 'order_asc' ); ?>"<?php checked( $order, 'ASC', true ); ?> />
-			<label for="<?php echo $this->get_field_name( 'order_asc' ); ?>"><?php _e( 'Ascending', 'taxonomy_list_widget' ); ?></label><br />
+			<label for="<?php echo $this->get_field_name( 'order_asc' ); ?>"><?php _e( 'Ascending', 'tag-list-widget' ); ?></label><br />
 
 			<input type="radio" name="<?php echo $this->get_field_name( 'order' ); ?>" value="DESC" id="<?php echo $this->get_field_name( 'order_desc' ); ?>"<?php checked( $order, 'DESC', true ); ?> />
-			<label for="<?php echo $this->get_field_name( 'order_desc' ); ?>"><?php _e( 'Descending', 'taxonomy_list_widget' ); ?></label>
+			<label for="<?php echo $this->get_field_name( 'order_desc' ); ?>"><?php _e( 'Descending', 'tag-list-widget' ); ?></label>
 		</p>
 
-		<h3><?php _e( 'Term Display', 'taxonomy_list_widget' ); ?></h3>
+		<h3><?php _e( 'Term Display', 'tag-list-widget' ); ?></h3>
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'limit' ); ?>"><?php _e( 'Limit number of terms shown to:', 'taxonomy_list_widget' ); ?></label><br />
+			<label for="<?php echo $this->get_field_id( 'limit' ); ?>"><?php _e( 'Limit number of terms shown to:', 'tag-list-widget' ); ?></label><br />
 			<input type="text" name="<?php echo $this->get_field_name( 'limit' ); ?>" id="<?php echo $this->get_field_id( 'limit' ); ?>" value="<?php echo intval( $limit ); ?>" size="3" /><br />
-			<span class="description"><?php _e( '<small>Enter <strong>0</strong> for no limit.', 'taxonomy_list_widget' ); ?></small></span>
+			<span class="description"><?php _e( '<small>Enter <strong>0</strong> for no limit.', 'tag-list-widget' ); ?></small></span>
 		</p>
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'max_name_length' ); ?>"><?php _e( 'Trim long term names to <em>x</em> characters:</label>', 'taxonomy_list_widget' ); ?><br />
+			<label for="<?php echo $this->get_field_id( 'max_name_length' ); ?>"><?php _e( 'Trim long term names to <em>x</em> characters:</label>', 'tag-list-widget' ); ?><br />
 			<input type="text" name="<?php echo $this->get_field_name( 'max_name_length' ); ?>" id="<?php echo $this->get_field_id( 'max_name_length' ); ?>" value="<?php echo intval( $max_name_length ); ?>" size="3" /><br />
-			<span class="description"><?php _e( '<small>Enter <strong>0</strong> to show full tag names.', 'taxonomy_list_widget' ); ?></small></span>
+			<span class="description"><?php _e( '<small>Enter <strong>0</strong> to show full tag names.', 'tag-list-widget' ); ?></small></span>
 		</p>
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'cutoff' ); ?>"><?php _e( 'Indicator that term names are trimmed:', 'taxonomy_list_widget' ); ?></label><br />
+			<label for="<?php echo $this->get_field_id( 'cutoff' ); ?>"><?php _e( 'Indicator that term names are trimmed:', 'tag-list-widget' ); ?></label><br />
 			<input type="text" name="<?php echo $this->get_field_name( 'cutoff' ); ?>" id="<?php echo $this->get_field_id( 'cutoff' ); ?>" value="<?php echo esc_attr( $cutoff ); ?>" size="3" /><br />
-			<span class="description"><?php _e( '<small>Leave blank to use an elipsis (&hellip;).</small>', 'taxonomy_list_widget' ); ?></span>
+			<span class="description"><?php _e( '<small>Leave blank to use an elipsis (&hellip;).</small>', 'tag-list-widget' ); ?></span>
 		</p>
 
 		<p>
 			<input type="checkbox" name="<?php echo $this->get_field_name( 'hide_empty' ); ?>" id="<?php echo $this->get_field_id( 'hide_empty' ); ?>"  value="0"<?php checked( false, $hide_empty, true ); ?> />
-			<label for="<?php echo $this->get_field_id( 'hide_empty' ); ?>"><?php _e( 'Include terms that aren\'t assigned to any objects (empty terms).', 'taxonomy_list_widget' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'hide_empty' ); ?>"><?php _e( 'Include terms that aren\'t assigned to any objects (empty terms).', 'tag-list-widget' ); ?></label>
 		</p>
 
 		<p>
 			<input type="checkbox" name="<?php echo $this->get_field_name( 'post_counts' ); ?>" id="<?php echo $this->get_field_id( 'post_counts' ); ?>"  value="1"<?php checked( true, $post_counts, true ); ?> />
-			<label for="<?php echo $this->get_field_id( 'post_counts' ); ?>"><?php _e( 'Display object (post) counts after term names.', 'taxonomy_list_widget' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'post_counts' ); ?>"><?php _e( 'Display object (post) counts after term names.', 'tag-list-widget' ); ?></label>
 		</p>
 
-		<h3><?php _e( 'Include/Exclude Terms', 'taxonomy_list_widget' ); ?></h3>
+		<h3><?php _e( 'Include/Exclude Terms', 'tag-list-widget' ); ?></h3>
 
 		<p>
-			<label><?php _e( 'Include/exclude terms:', 'taxonomy_list_widget' ); ?></label><br />
+			<label><?php _e( 'Include/exclude terms:', 'tag-list-widget' ); ?></label><br />
 
 			<input type="radio" name="<?php echo $this->get_field_name( 'incexc' ); ?>" value="include" id="<?php echo $this->get_field_id( 'include' ); ?>"<?php checked( $incexc, 'include', true ); ?> />
-			<label for="<?php echo $this->get_field_id( 'include' ); ?>"><?php _e( 'Include only the term IDs listed below', 'taxonomy_list_widget' ); ?></label><br />
+			<label for="<?php echo $this->get_field_id( 'include' ); ?>"><?php _e( 'Include only the term IDs listed below', 'tag-list-widget' ); ?></label><br />
 
 			<input type="radio" name="<?php echo $this->get_field_name( 'incexc' ); ?>" value="exclude" id="<?php echo $this->get_field_id( 'exclude' ); ?>"<?php checked( $incexc, 'exclude', true ); ?> />
-			<label for="<?php echo $this->get_field_id( 'exclude' ); ?>"><?php _e( 'Exclude the term IDs listed below', 'taxonomy_list_widget' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'exclude' ); ?>"><?php _e( 'Exclude the term IDs listed below', 'tag-list-widget' ); ?></label>
 		</p>
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'incexc_ids' ); ?>"><?php _e( 'Term IDs to include/exclude based on above setting:', 'taxonomy_list_widget' ); ?></label><br />
+			<label for="<?php echo $this->get_field_id( 'incexc_ids' ); ?>"><?php _e( 'Term IDs to include/exclude based on above setting:', 'tag-list-widget' ); ?></label><br />
 			<input type="text" name="<?php echo $this->get_field_name( 'incexc_ids' ); ?>" class="widefat code" id="<?php echo $this->get_field_id( 'incexc_ids' ); ?>" value="<?php echo esc_attr( implode( ', ', $incexc_ids ) ); ?>" /><br />
-			<span class="description"><?php _e( '<small>Enter comma-separated list of term IDs.</small>', 'taxonomy_list_widget' ); ?></span>
+			<span class="description"><?php _e( '<small>Enter comma-separated list of term IDs.</small>', 'tag-list-widget' ); ?></span>
 		</p>
 
-		<h3><?php _e( 'Advanced', 'taxonomy_list_widget' ); ?></h3>
+		<h3><?php _e( 'Advanced', 'tag-list-widget' ); ?></h3>
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'threshold' ); ?>"><?php _e( 'Show terms assigned to at least this many posts:', 'taxonomy_list_widget' ); ?></label><br />
+			<label for="<?php echo $this->get_field_id( 'threshold' ); ?>"><?php _e( 'Show terms assigned to at least this many posts:', 'tag-list-widget' ); ?></label><br />
 			<input type="text" name="<?php echo $this->get_field_name( 'threshold' ); ?>" id="<?php echo $this->get_field_id( 'threshold' ); ?>" value="<?php echo intval( $threshold ); ?>" size="3" /><br />
-			<span class="description"><?php _e( '<small>Set to <strong>0</strong> to display all terms matching the above criteria.</small>', 'taxonomy_list_widget' ); ?></span>
+			<span class="description"><?php _e( '<small>Set to <strong>0</strong> to display all terms matching the above criteria.</small>', 'tag-list-widget' ); ?></span>
 		</p>
 
 		<p>
-			<label><?php _e( 'Link relationship:', 'taxonomy_list_widget' ); ?></label><br />
+			<label><?php _e( 'Link relationship:', 'tag-list-widget' ); ?></label><br />
 
 			<input type="radio" name="<?php echo $this->get_field_name( 'rel' ); ?>" value="nofollow" id="<?php echo $this->get_field_id( 'rel-n' ); ?>"<?php checked( $rel, 'nofollow', true ); ?> />
-			<label for="<?php echo $this->get_field_id( 'rel-n' ); ?>"><?php _e( 'nofollow', 'taxonomy_list_widget' ); ?></label><br />
+			<label for="<?php echo $this->get_field_id( 'rel-n' ); ?>"><?php _e( 'nofollow', 'tag-list-widget' ); ?></label><br />
 
 			<input type="radio" name="<?php echo $this->get_field_name( 'rel' ); ?>" value="dofollow" id="<?php echo $this->get_field_id( 'rel-d' ); ?>"<?php checked( $rel, 'dofollow', true ); ?> />
-			<label for="<?php echo $this->get_field_id( 'rel-d' ); ?>"><?php _e( 'dofollow', 'taxonomy_list_widget' ); ?></label><br />
+			<label for="<?php echo $this->get_field_id( 'rel-d' ); ?>"><?php _e( 'dofollow', 'tag-list-widget' ); ?></label><br />
 
-			<span class="description"><?php _e( 'The above setting determines whether or not search engines visit linked pages from links in this widget\'s list.', 'taxonomy_list_widget' ); ?></span>
+			<span class="description"><?php _e( 'The above setting determines whether or not search engines visit linked pages from links in this widget\'s list.', 'tag-list-widget' ); ?></span>
 		</p>
 
 	<?php
